@@ -8,6 +8,7 @@ module.exports = {
         emailAddressRequired: "Email address is required",
         invalidEmail: "Invalid email-address please check and try again !",
         verifyEmail: "Verify Email",
+        emailNoTRegistered : "This Email is not registered !",
         exist : "email already exist !",
         verifyEmailActionDescription: "Tap the button below to confirm your email address. If you didn't create an account with Subtle, you can safely delete this email."
     },
