@@ -11,7 +11,7 @@ const allPosts = async (req,res)=>{
 };
 
 const savePost = async (req,res)=>{
-    const myPost = new post({
+    const myPost = post({
         title : req.body.title,
         description : req.body.description,
     })
