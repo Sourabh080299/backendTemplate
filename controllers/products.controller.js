@@ -1,4 +1,4 @@
-const products = require('../models/products.model');
+const products = require('../models/index').Products;
 
 const allProduct = async (req,res)=>{
         
@@ -28,7 +28,6 @@ const saveProduct = async (req,res)=>{
     catch (err){
         res.status(400).send(err);
     }
-
 }
 
 module.exports = {

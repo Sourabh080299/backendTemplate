@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         validate: [validateEmail, e.email.invalidEmail],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, e.email.invalidEmail]
     },
+    verified : {
+        type : Boolean,
+        defaultValue : false,
+    },
     password : {
         type : String,
         required : true,
