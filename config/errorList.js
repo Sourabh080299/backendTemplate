@@ -30,6 +30,7 @@ module.exports = {
         invalidPassword: "Invalid password !",
         invalidOldPassword: "Invalid Old password !",
         passwordChangedSuccess: "Password changed Successfully !",
+        passwordAndconfirmPasswordDifferent : "Please provide same value for Password And confirm Password !"
     },
     verification: {
         notVerifiedEmail: "Please verify this email ID to access these routes !"

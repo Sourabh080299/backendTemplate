@@ -16,9 +16,16 @@ const signup = async (req,res)=>{
 
     const isEmailExist = await User.findOne({email : req.body.email});
         if(isEmailExist) return res.status(400).send(e.email.exist)
-        try{
+        try{ 
             const savedUser = await myUser.save();
-            sendMailTo(savedUser);
+            const token = jwt.sign({
+                    _id: savedUser._id
+                }, process.env.JWT_ACCESS_TOKEN, { expiresIn: '5m' }  
+            );
+            const url = `${process.env.BASE_URL}/users/verify/${token}`;
+            const action_description = e.email.verifyEmailActionDescription;
+            const type_of_action = e.email.verifyEmail;
+            sendMailTo(savedUser, url, action_description, type_of_action);
             res.json(savedUser);
         }
         catch ( err ) {
@@ -37,9 +44,16 @@ const allUsers = async (req,res)=>{
 };
 
 const login = async (req,res) =>{
-    const currentUser = await User.findOne({email : req.body.email});
-    const token = await jwt.sign({_id : currentUser._id},process.env.JWT_ACCESS_TOKEN);
-    res.header({'auth-token' : token}).send(token);
+    try {
+        const currentUser = await User.findOne({email : req.body.email});
+        const token = await jwt.sign({_id : currentUser._id},process.env.JWT_ACCESS_TOKEN,{expiresIn : '15d'});
+        res.header({'auth-token' : token}).send(token);
+    }
+    catch (error) {
+        res.status(500).json({
+            error : error.message
+        })
+    }
 };
 
 const callBack = (req, res) => {

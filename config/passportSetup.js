@@ -35,7 +35,7 @@ async (req, accessToken, refreshToken, profile, done) => {
             password
         });
     }
-    const token = jwt.sign( {_id : user._id}, process.env.JWT_ACCESS_TOKEN );
+    const token = jwt.sign( {_id : user._id}, process.env.JWT_ACCESS_TOKEN, { expiresIn: '15d' } );
     req.headers['auth-token'] = `Bearer ${token}`;
     return done(null, user); 
 }

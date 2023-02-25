@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
-const jwt = require('jsonwebtoken');
 
-const sendMailTo = async ( receiver ) => {
+const sendMailTo = async ( receiver , url, action_description, type_of_action ) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
@@ -11,41 +10,32 @@ const sendMailTo = async ( receiver ) => {
             pass: process.env.NODEMAILER_PASSWORD,
         }
     });
-      
-    const token = jwt.sign({
-           _id: receiver._id
-        }, process.env.JWT_ACCESS_TOKEN, { expiresIn: '10m' }  
-    );    
-      
+    
+
     const mailConfigurations = {
       
         // It should be a string of sender/server email
         from: process.env.NODEMAILER_EMAIL,
-      
         to: receiver.email,
-      
-        // Subject of Email
-        subject: 'Email Verification',
+        subject: type_of_action,
           
         // This would be the text of email body
-        text: `Hi! There, You have recently visited 
-               our website and entered your email.
-               Please follow the given link to verify your email
-               http://localhost:3000/users/verify/${token} 
+        text: `${action_description}
+               ${url} 
                Thanks`
           
     };
       
     transporter.sendMail(mailConfigurations, function(error, info){
         if (error) {
-            console.log("your error---------->",error)
+           
         }
         else {
-            console.log('Email Sent Successfully');
-            console.log(info); 
-        }
-        
+            console.log(info)
+        }        
     });
+    // return response;
+
 }
 
 module.exports = sendMailTo;
