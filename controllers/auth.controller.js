@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const sendMailTo = require('../services/email.services');
 
 const signup = async (req,res)=>{
+    console.log("------>",req.body)
     req.body.password = await bcrypt.hash(req.body.password, saltRounds);
     const myUser = await User({
         name : req.body.name,
